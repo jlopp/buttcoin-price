@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Buttcoin Opportunity Cost Tracker</title>
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd')
+        .then(response => response.json())
+        .then(data => {
+            const startingPrice = 13.93
+            const ketPrice = 60
+            const investment = 1000
+            const bitcoinPrice = data.bitcoin.usd
+            const fundValue = bitcoinPrice * investment / startingPrice
+            
+            document.getElementById('fund').textContent = '$' + fundValue.toLocaleString(
+              'en-US',
+              {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2}
+            )
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+            document.getElementById('fund').textContent = 'Failed to load price'
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <div class="container">
+    <h1 class="text-center">Buttcoiner Opportunity Cost Tracker</h1>
+    <hr/>
+    <div class="row">
+      <div class="col-md-12">
+        <div>
+          <div class="col-sm-2">
+          </div>
+          <div class="col-sm-10">
+            <img src="/img/buttcoin.png" style="display: block; margin-left: auto;margin-right: auto;"/>
+            <div class="intro">
+              <p>$1,000 invested in bitcoin on the day <a href="https://www.reddit.com/r/Buttcoin/">r/Buttcoin</a> was created would now be worth:</p>
+            </div>
+            <div>
+              <h2 id="fund">...</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr/>
+      <div class="col-md-12">
+        <div>
+          <hr/>
+          <div class="col-sm-2">
+          </div>
+          <div class="col-sm-10">
+            <h2>This tool is 100% open source code</h2>
+            <p>
+              <span>The Buttcoin Opportunity Cost Tracker repository can be found at </span>
+              <a href="https://github.com/jlopp/buttcoin-price" target="_blank">
+              https://github.com/jlopp/buttcoin-price
+              </a>
+            </p>
+            <h3>Libraries</h3>
+            <p>
+              <span>Twitter Bootstrap: </span>
+              <a href="http://getbootstrap.com/" target="_blank">
+              http://getbootstrap.com/
+              </a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
